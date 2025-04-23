@@ -1,0 +1,18 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghost
+  namespace: ghost-blog
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb" # NLB for AWS
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: "eipalloc-0943948ffeb7e4f54,eipalloc-03ba2164e48285f81"
+spec:
+  type: LoadBalancer # Ensure LoadBalancer type is set
+  selector:
+    app: ghost
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 2368 # Ghost runs on 2368 inside the container

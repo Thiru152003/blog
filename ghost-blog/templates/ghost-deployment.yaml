@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+  namespace: ghost-blog  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost:5.115.1
+          imagePullPolicy: Always 
+          securityContext:
+           runAsUser: 1000
+           runAsGroup: 1000
+           fsGroup: 1000
+            capabilities:
+              drop:
+                - ALL  
+            allowPrivilegeEscalation: false
+          env:
+            - name: database__client
+              value: mysql
+            - name: database__connection__host
+              value: mysql
+            - name: database__connection__user
+              value: ghost
+            - name: database__connection__password
+              value: ghostpassword
+            - name: database__connection__database
+              value: ghostdb
+          ports:
+            - containerPort: 2368
+          volumeMounts:
+            - name: ghost-storage
+              mountPath: /var/lib/ghost/content
+          resources:  # ✅ CKV_K8S_12 & CKV_K8S_13 - Set memory requests and limits
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
+          livenessProbe:  # ✅ CKV_K8S_8 - Add liveness probe
+            httpGet:
+              path: /
+              port: 2368
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      volumes:
+        - name: ghost-storage
+          persistentVolumeClaim:
+            claimName: ghost-pvc
