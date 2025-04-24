@@ -46,11 +46,11 @@ spec:
               mountPath: /var/lib/ghost/content
           resources:   # ✅ CKV_K8S_10, CKV_K8S_11, CKV_K8S_12, CKV_K8S_13
             requests:
-              memory: "256Mi"
-              cpu: "100m"
-            limits:
               memory: "512Mi"
-              cpu: "250m"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
           livenessProbe:  # ✅ CKV_K8S_8
             httpGet:
               path: /
