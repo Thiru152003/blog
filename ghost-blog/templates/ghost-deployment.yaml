@@ -21,6 +21,10 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
+            capabilities:
+              drop:
+                - ALL  
+            allowPrivilegeEscalation: false
           env:
             - name: database__client
               value: mysql
@@ -50,11 +54,6 @@ spec:
               port: 2368
             initialDelaySeconds: 30
             periodSeconds: 10
-          securityContext:
-            capabilities:
-              drop:
-                - ALL  
-            allowPrivilegeEscalation: false
       volumes:
         - name: ghost-storage
           persistentVolumeClaim:
