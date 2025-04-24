@@ -12,7 +12,7 @@ ghost:
 
 mysql:
   image: mysql:8.0.41
-  storage: 10Gi
+  storage: 20Gi
   rootPassword: rootpassword
   database: ghostdb
   user: ghost
