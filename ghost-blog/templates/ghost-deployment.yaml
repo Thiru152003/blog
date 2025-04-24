@@ -55,10 +55,10 @@ spec:
             httpGet:
               path: /
               port: 2368
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
+            timeoutSeconds: 10
+            failureThreshold: 5
             successThreshold: 1
       volumes:
         - name: ghost-storage
