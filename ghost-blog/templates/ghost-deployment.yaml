@@ -13,6 +13,8 @@ spec:
       labels:
         app: ghost
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: ghost
           image: ghost:5.115.1
@@ -20,12 +22,10 @@ spec:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
-          securityContext:
-             fsGroup: 1000
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - ALL  
-            allowPrivilegeEscalation: false
+                - ALL
           env:
             - name: database__client
               value: mysql
