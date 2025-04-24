@@ -1,6 +1,6 @@
 ghost:
   image: ghost:5.115.1
-  storage: 10Gi
+  storage: 20Gi
   host: blog.cloudmasa.com
   dbUser: ghost
   dbPassword: ghostpassword
